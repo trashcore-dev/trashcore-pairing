@@ -2,7 +2,7 @@
     "name": "VolTah-XMD Pairing",
     "description": "VolTah-XMD WA bot, Created by Giddy Tennor",
     "logo": "https://telegra.ph/file/a7ca8d4777fa8ad977795.jpg",
-    "repository": "https://github.com/cheekydavy/MBUVI-PAIR-CODE",
+    "repository": "https://github.com/Tennor-modz/trashcore-pairing",
     "keywords": ["LegacyMd"],
     "success_url": "/", 
     "buildpacks": [{ "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest" } ],
