@@ -1,1 +1,1 @@
-web: node voltah.js
+worker: node voltah.js
