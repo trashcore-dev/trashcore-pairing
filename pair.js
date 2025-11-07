@@ -72,9 +72,9 @@ router.get('/', async (req, res) => {
 ║ - SESSION_ID: 
 ╚════════════════════╝
 ╔════════════════════◇
-║web: www.trashcore.zone.id
+║web: www.trashcorehub.zone.id
 ╚═════════════════════╝
-𒂀 Trashcore Md
+𒂀 TRASHBOTS
 
 
 ---
