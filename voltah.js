@@ -1,26 +1,34 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-__path = process.cwd()
 const bodyParser = require("body-parser");
+
+require("events").EventEmitter.defaultMaxListeners = 500;
+
+// Backend routes
+const qrRoute = require("./qr");
+const codeRoute = require("./pair");
+
 const PORT = process.env.PORT || 8000;
-let server = require('./qr'),
-    code = require('./pair');
-require('events').EventEmitter.defaultMaxListeners = 500;
-app.use('/qr', server);
-app.use('/code', code);
-app.use('/pair',async (req, res, next) => {
-res.sendFile(__path + '/pair.html')
-})
-app.use('/',async (req, res, next) => {
-res.sendFile(__path + '/main.html')
-})
+
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// API Endpoints
+app.use("/qr", qrRoute);
+app.use("/code", codeRoute);
+
+// Health Check
+app.get("/", (req, res) => {
+  res.json({
+    status: "Online",
+    message: "Trashcore pairing backend is running",
+  });
+});
+
+// Start server
 app.listen(PORT, () => {
-    console.log(`
-Don't Forget To Give Star
+  console.log(`🚀 Backend running on http://localhost:${PORT}`);
+});
 
- Server running on http://localhost:` + PORT)
-})
-
-module.exports = app
+module.exports = app;
