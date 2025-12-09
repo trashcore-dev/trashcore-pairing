@@ -1,3 +1,14 @@
+// 🔥 GLOBAL PROCESS ERROR LOGGING (MUST be at the very top)
+process.on("unhandledRejection", (err) => {
+  console.error("UNHANDLED REJECTION:", err);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("UNCAUGHT EXCEPTION:", err);
+});
+
+// ------------------- YOUR SERVER CODE -------------------
+
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -26,7 +37,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// 🛑 GLOBAL ERROR HANDLER (important for Render)
+// Express error handler
 app.use((err, req, res, next) => {
   console.error("🔥 SERVER ERROR:", err.stack || err);
   res.status(500).json({
