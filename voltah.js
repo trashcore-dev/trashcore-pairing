@@ -14,6 +14,9 @@ const app = express();
 const bodyParser = require("body-parser");
 
 
+const statsRoute = require('./stats');
+// ...
+app.use('/stats', statsRoute);
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*"); // ← critical for Vercel
   res.header("Access-Control-Allow-Methods", "GET, OPTIONS");
