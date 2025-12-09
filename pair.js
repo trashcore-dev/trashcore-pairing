@@ -29,7 +29,10 @@ router.get('/', async (req, res) => {
             let Pair_Code_By_Mbuvi_Tech = Mbuvi_Tech({
                 auth: {
                     creds: state.creds,
-                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' }).child({ level: 'fatal' })),
+    keys: makeCacheableSignalKeyStore(
+      state.keys,
+      pino({ level: 'silent' }).child({ level: 'silent' })
+              )
                 },
                 version,
                 printQRInTerminal: false,
