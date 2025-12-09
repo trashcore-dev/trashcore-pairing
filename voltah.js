@@ -13,6 +13,14 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // ← critical for Vercel
+  res.header("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
 require("events").EventEmitter.defaultMaxListeners = 500;
 
 // Backend routes
