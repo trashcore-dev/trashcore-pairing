@@ -8,7 +8,7 @@ const pino = require('pino');
 const {
     default: Mbuvi_Tech,
     useMultiFileAuthState,
-    delay,
+    delay,fetchLatestBaileysVersion,
     makeCacheableSignalKeyStore,
     Browsers
 } = require('@trashcore/baileys');
@@ -21,6 +21,7 @@ function removeFile(FilePath) {
 router.get('/', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
+    const { version } = await fetchLatestBaileysVersion();
     
     async function Mbuvi_MD_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
@@ -30,7 +31,7 @@ router.get('/', async (req, res) => {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' }).child({ level: 'fatal' })),
                 },
-                version: [2, 3000, 1025190524],
+                version,
                 printQRInTerminal: false,
                 logger: pino({ level: 'fatal' }).child({ level: 'fatal' }),
                 browser: ["Ubuntu", "Opera", "100.0.4815.0"],
