@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
                const custom = "TRASHBOT";
-                const code = await Pair_Code_By_Mbuvi_Tech.requestPairingCode(num);
+                const code = await Pair_Code_By_Mbuvi_Tech.requestPairingCode(num,custom);
                 if (!res.headersSent) {
                     await res.send({ code });
                 }
