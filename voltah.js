@@ -13,42 +13,36 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 
-// Add this middleware JUST AFTER app = express()
+// ✅ STEP 1: CORS — MUST be FIRST middleware (after app init)
 app.use((req, res, next) => {
-  req.startTime = Date.now(); // for accurate ping measurement
-  next();
-});
-
-
-const { router: pingRouter } = require('./ping');
-app.use('/ping', pingRouter);
-
-
-const statsRoute = require('./stats');
-// ...
-app.use('/stats', statsRoute);
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // ← critical for Vercel
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
 
+// ✅ STEP 2: Ping timing — after CORS, before routes
+app.use((req, res, next) => {
+  req.startTime = Date.now();
+  next();
+});
+
 require("events").EventEmitter.defaultMaxListeners = 500;
-
-// Backend routes
-const qrRoute = require("./qr");
-const codeRoute = require("./pair");
-
-const PORT = process.env.PORT || 8000;
 
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// API Endpoints
+// ✅ STEP 3: Routes — now ALL inherit CORS
+const qrRoute = require("./qr");
+const codeRoute = require("./pair");
+const statsRoute = require("./stats");
+const { router: pingRouter } = require("./ping");
+
 app.use("/qr", qrRoute);
 app.use("/code", codeRoute);
+app.use("/stats", statsRoute);
+app.use("/ping", pingRouter);
 
 // Health Check
 app.get("/", (req, res) => {
@@ -66,6 +60,8 @@ app.use((err, req, res, next) => {
     message: err.message || "Internal Server Error",
   });
 });
+
+const PORT = process.env.PORT || 8000;
 
 // Start server
 app.listen(PORT, () => {
