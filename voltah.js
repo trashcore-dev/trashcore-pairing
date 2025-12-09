@@ -26,6 +26,15 @@ app.get("/", (req, res) => {
   });
 });
 
+// 🛑 GLOBAL ERROR HANDLER (important for Render)
+app.use((err, req, res, next) => {
+  console.error("🔥 SERVER ERROR:", err.stack || err);
+  res.status(500).json({
+    status: "error",
+    message: err.message || "Internal Server Error",
+  });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Backend running on http://localhost:${PORT}`);
