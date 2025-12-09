@@ -13,6 +13,16 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 
+// Add this middleware JUST AFTER app = express()
+app.use((req, res, next) => {
+  req.startTime = Date.now(); // for accurate ping measurement
+  next();
+});
+
+
+const { router: pingRouter } = require('./ping');
+app.use('/ping', pingRouter);
+
 
 const statsRoute = require('./stats');
 // ...
