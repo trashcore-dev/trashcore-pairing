@@ -1,20 +1,25 @@
-// ping.js
+
 const express = require('express');
 const router = express.Router();
 
-// Store server start time - this persists across requests
-const SERVER_START_TIME = Date.now();
+// Track server start time
+const startTime = Date.now();
 
 router.get('/', (req, res) => {
-  // Calculate uptime in seconds
-  const uptimeSeconds = Math.floor((Date.now() - SERVER_START_TIME) / 1000);
-  
+  const uptimeMs = Date.now() - startTime;
+  const uptimeSec = Math.floor(uptimeMs / 1000);
+  const uptime = {
+    seconds: uptimeSec % 60,
+    minutes: Math.floor(uptimeSec / 60) % 60,
+    hours: Math.floor(uptimeSec / 3600)
+  };
+
   res.json({
     status: 'active',
-    uptime: uptimeSeconds,
-    timestamp: new Date().toISOString(),
-    message: 'Server is running'
+    ping: Date.now() - req.startTime, // will set req.startTime via middleware
+    uptime,
+    timestamp: new Date().toISOString()
   });
 });
 
-module.exports = { router };
+module.exports = { router, startTime };
