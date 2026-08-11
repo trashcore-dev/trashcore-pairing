@@ -2,8 +2,8 @@
     "description": "VolTah-session",
     "main": "./voltah.js",
   "engines" : { 
-    "npm" : ">=9.7.2",
-    "node" : ">=20.0.0"
+    "npm": "10.x",
+    "node": "20.x"
     },
     "scripts": {
     "start": "node voltah.js"
